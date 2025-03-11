@@ -62,6 +62,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </form>
         <div class="reset-link">
             <a href="reset_request.php">Passwort zurücksetzen</a>
+            <br>
+            <a href="register_citizen.php" class="register-link">Registrieren</a>
         </div>
     </div>
 </body>
