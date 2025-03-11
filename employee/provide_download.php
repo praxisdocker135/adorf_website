@@ -18,27 +18,29 @@ try {
 $staff = $_SESSION['user'];
 
 // Meldungen
-$message = '';
-$error   = '';
+$messageStandard = ''; // Meldung beim Zuweisen eines Standarddownloads
+$errorStandard   = '';
 
-// Formularverarbeitung
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+$messageUpload = '';   // Meldung beim Hochladen einer neuen Datei
+$errorUpload   = '';
+
+// 1. POST-Verarbeitung: Standard-Download zuweisen
+if (isset($_POST['action']) && $_POST['action'] === 'assign_standard') {
     $downloadId = (int)($_POST['download_id'] ?? 0);
     $citizenId  = (int)($_POST['citizen_id']  ?? 0);
 
     if ($downloadId <= 0 || $citizenId <= 0) {
-        $error = "Bitte sowohl einen Standarddownload als auch einen Bürger auswählen.";
+        $errorStandard = "Bitte sowohl einen Standarddownload als auch einen Bürger auswählen.";
     } else {
-        // 1. Standard-Download-Datensatz abfragen
+        // Standard-Download-Datensatz prüfen
         $stmt = $pdo->prepare("SELECT file_name, file_path FROM downloads WHERE id = :id AND is_standard = 1");
         $stmt->execute([':id' => $downloadId]);
         $standardDownload = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$standardDownload) {
-            $error = "Der ausgewählte Download ist nicht (mehr) verfügbar oder kein Standarddownload.";
+            $errorStandard = "Der ausgewählte Download ist nicht (mehr) verfügbar oder kein Standarddownload.";
         } else {
-            // 2. Neuen Eintrag für den Bürger anlegen -> Download zuweisen
-            //    (Dupliziert file_name und file_path, aber is_standard=0 und assigned_to = citizenId)
+            // Neuen Eintrag für den Bürger anlegen
             $stmt2 = $pdo->prepare("
                 INSERT INTO downloads (file_name, file_path, assigned_to, uploaded_by, is_standard)
                 VALUES (:file_name, :file_path, :assigned_to, :uploaded_by, 0)
@@ -49,19 +51,66 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':assigned_to'  => $citizenId,
                 ':uploaded_by'  => $staff['id']
             ]);
-            $message = "Download wurde erfolgreich zugewiesen.";
+            $messageStandard = "Standard-Download wurde erfolgreich zugewiesen.";
         }
     }
 }
 
-// 3. Standarddownloads laden
+// 2. POST-Verarbeitung: Neue Datei hochladen und zuweisen
+if (isset($_POST['action']) && $_POST['action'] === 'upload_new') {
+    $citizenId = (int)($_POST['citizen_id'] ?? 0);
+
+    // Datei-Check
+    if ($citizenId <= 0) {
+        $errorUpload = "Bitte wählen Sie einen Bürger aus.";
+    } elseif (!isset($_FILES['file']) || $_FILES['file']['error'] !== UPLOAD_ERR_OK) {
+        $errorUpload = "Bitte wählen Sie eine Datei aus.";
+    } else {
+        // Optional: Dateityp checken
+        $allowedTypes = ['application/pdf', 'image/jpeg', 'image/png'];
+        if (!in_array($_FILES['file']['type'], $allowedTypes)) {
+            $errorUpload = "Nur PDF, JPG oder PNG sind erlaubt.";
+        } else {
+            // Datei speichern
+            $uploadDir = __DIR__ . '/../files/downloads/';
+            // Passe diesen Pfad ggf. an!
+            // Wenn dein 'dashboard.php' im Hauptverzeichnis liegt und 'employee' ein Unterordner ist,
+            // dann ../files/downloads/ => /var/www/html/files/downloads/
+
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0755, true);
+            }
+            $origName   = basename($_FILES['file']['name']);
+            $newName    = time() . '_' . $origName;  // Eindeutiger Dateiname
+            $targetPath = $uploadDir . $newName;
+
+            if (move_uploaded_file($_FILES['file']['tmp_name'], $targetPath)) {
+                // In DB eintragen -> assigned_to = $citizenId, is_standard=0, uploaded_by = staff
+                $stmt = $pdo->prepare("
+                    INSERT INTO downloads (file_name, file_path, assigned_to, uploaded_by, is_standard)
+                    VALUES (:file_name, :file_path, :assigned_to, :uploaded_by, 0)
+                ");
+                $stmt->execute([
+                    ':file_name'    => $origName,
+                    ':file_path'    => $newName,
+                    ':assigned_to'  => $citizenId,
+                    ':uploaded_by'  => $staff['id']
+                ]);
+                $messageUpload = "Neue Datei wurde hochgeladen und zugewiesen.";
+            } else {
+                $errorUpload = "Fehler beim Hochladen der Datei.";
+            }
+        }
+    }
+}
+
+// Standarddownloads laden
 $stmt = $pdo->query("SELECT id, file_name FROM downloads WHERE is_standard = 1 ORDER BY file_name");
 $standardDownloads = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// 4. Alle Bürger laden (Rolle 'citizen')
+// Alle Bürger laden (Rolle 'citizen')
 $stmt = $pdo->query("SELECT id, username, first_name, last_name FROM users WHERE role = 'citizen' ORDER BY username");
 $citizens = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -76,16 +125,17 @@ $citizens = $stmt->fetchAll(PDO::FETCH_ASSOC);
             padding: 20px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
         }
         .form-container h2 {
             text-align: center;
         }
-        .form-container .message {
+        .message {
             text-align: center;
             color: green;
             margin-bottom: 15px;
         }
-        .form-container .error {
+        .error {
             text-align: center;
             color: red;
             margin-bottom: 15px;
@@ -94,11 +144,11 @@ $citizens = $stmt->fetchAll(PDO::FETCH_ASSOC);
             display: flex;
             flex-direction: column;
         }
-        .form-container label {
+        label {
             margin-bottom: 5px;
             font-weight: bold;
         }
-        select, button, input[type="text"] {
+        select, button, input[type="text"], input[type="file"] {
             padding: 10px;
             margin-bottom: 15px;
             border: 1px solid #ccc;
@@ -111,23 +161,32 @@ $citizens = $stmt->fetchAll(PDO::FETCH_ASSOC);
             cursor: pointer;
             font-size: 16px;
         }
-        /* Suchfeld + Dropdown für Bürger */
+        /* Einfaches CSS/JS für Suchfeld */
         .citizen-search-wrapper {
             position: relative;
         }
-        #citizenSearch {
+        #citizenSearch, #citizenSearch2 {
             margin-bottom: 5px;
         }
-        #citizenSelect {
+        select {
             width: 100%;
             box-sizing: border-box;
         }
     </style>
     <script>
-        // Einfache JS-Lösung, um Bürger in der Select-Liste zu filtern
-        function filterCitizens() {
+        // Filtern der Bürger (Select) in erstem Formular
+        function filterCitizens1() {
             const searchInput = document.getElementById('citizenSearch').value.toLowerCase();
-            const select = document.getElementById('citizenSelect');
+            const select = document.getElementById('citizenSelect1');
+            for (let i = 0; i < select.options.length; i++) {
+                const txt = select.options[i].text.toLowerCase();
+                select.options[i].style.display = txt.includes(searchInput) ? '' : 'none';
+            }
+        }
+        // Filtern der Bürger (Select) in zweitem Formular
+        function filterCitizens2() {
+            const searchInput = document.getElementById('citizenSearch2').value.toLowerCase();
+            const select = document.getElementById('citizenSelect2');
             for (let i = 0; i < select.options.length; i++) {
                 const txt = select.options[i].text.toLowerCase();
                 select.options[i].style.display = txt.includes(searchInput) ? '' : 'none';
@@ -136,16 +195,20 @@ $citizens = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </script>
 </head>
 <body>
+
+<!-- 1) Standard-Download zuweisen -->
 <div class="form-container">
-    <h2>Download bereitstellen</h2>
-    <?php if ($message): ?>
-        <p class="message"><?php echo htmlspecialchars($message); ?></p>
+    <h2>Vorhandenen Standard-Download zuweisen</h2>
+    <?php if ($messageStandard): ?>
+        <p class="message"><?php echo htmlspecialchars($messageStandard); ?></p>
     <?php endif; ?>
-    <?php if ($error): ?>
-        <p class="error"><?php echo htmlspecialchars($error); ?></p>
+    <?php if ($errorStandard): ?>
+        <p class="error"><?php echo htmlspecialchars($errorStandard); ?></p>
     <?php endif; ?>
 
     <form action="dashboard.php?page=provide_download" method="post">
+        <input type="hidden" name="action" value="assign_standard">
+
         <label for="download_id">Standarddownload auswählen:</label>
         <select name="download_id" id="download_id" required>
             <option value="">-- Bitte wählen --</option>
@@ -157,10 +220,10 @@ $citizens = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </select>
 
         <label for="citizenSearch">Bürger suchen:</label>
-        <input type="text" id="citizenSearch" placeholder="Suchbegriff eingeben..." onkeyup="filterCitizens()">
+        <input type="text" id="citizenSearch" placeholder="Suchbegriff eingeben..." onkeyup="filterCitizens1()">
 
-        <label for="citizenSelect">Bürger auswählen:</label>
-        <select name="citizen_id" id="citizenSelect" required>
+        <label for="citizenSelect1">Bürger auswählen:</label>
+        <select name="citizen_id" id="citizenSelect1" required>
             <option value="">-- Bitte wählen --</option>
             <?php foreach ($citizens as $c): ?>
                 <?php
@@ -178,5 +241,45 @@ $citizens = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <button type="submit">Zuweisen</button>
     </form>
 </div>
+
+<!-- 2) Neue Datei hochladen und zuweisen -->
+<div class="form-container">
+    <h2>Neue Datei hochladen &amp; zuweisen</h2>
+    <?php if ($messageUpload): ?>
+        <p class="message"><?php echo htmlspecialchars($messageUpload); ?></p>
+    <?php endif; ?>
+    <?php if ($errorUpload): ?>
+        <p class="error"><?php echo htmlspecialchars($errorUpload); ?></p>
+    <?php endif; ?>
+
+    <form action="dashboard.php?page=provide_download" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="action" value="upload_new">
+
+        <label for="citizenSearch2">Bürger suchen:</label>
+        <input type="text" id="citizenSearch2" placeholder="Suchbegriff eingeben..." onkeyup="filterCitizens2()">
+
+        <label for="citizenSelect2">Bürger auswählen:</label>
+        <select name="citizen_id" id="citizenSelect2" required>
+            <option value="">-- Bitte wählen --</option>
+            <?php foreach ($citizens as $c): ?>
+                <?php
+                $displayText = $c['username'];
+                if ($c['first_name'] || $c['last_name']) {
+                    $displayText .= " - " . $c['first_name'] . " " . $c['last_name'];
+                }
+                ?>
+                <option value="<?php echo $c['id']; ?>">
+                    <?php echo htmlspecialchars($displayText); ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+
+        <label for="file">Datei (PDF, JPG, PNG):</label>
+        <input type="file" name="file" id="file" accept=".pdf,image/jpeg,image/png" required>
+
+        <button type="submit">Hochladen &amp; zuweisen</button>
+    </form>
+</div>
+
 </body>
 </html>
