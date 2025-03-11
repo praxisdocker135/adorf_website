@@ -1,11 +1,6 @@
 <?php
 session_start();
 
-// Nur Admins sollen Zugriff haben
-if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
-    header("Location: ../login.php");
-    exit;
-}
 
 // DB-Verbindung anpassen
 $dsn    = "mysql:host=localhost;dbname=adorf_website;charset=utf8";
