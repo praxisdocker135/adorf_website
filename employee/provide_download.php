@@ -118,26 +118,6 @@ $citizens = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <title>Download bereitstellen</title>
     <link rel="stylesheet" href="../css/styles.css">
-    <script>
-        // Filtern der Bürger (Select) in erstem Formular
-        function filterCitizens1() {
-            const searchInput = document.getElementById('citizenSearch').value.toLowerCase();
-            const select = document.getElementById('citizenSelect1');
-            for (let i = 0; i < select.options.length; i++) {
-                const txt = select.options[i].text.toLowerCase();
-                select.options[i].style.display = txt.includes(searchInput) ? '' : 'none';
-            }
-        }
-        // Filtern der Bürger (Select) in zweitem Formular
-        function filterCitizens2() {
-            const searchInput = document.getElementById('citizenSearch2').value.toLowerCase();
-            const select = document.getElementById('citizenSelect2');
-            for (let i = 0; i < select.options.length; i++) {
-                const txt = select.options[i].text.toLowerCase();
-                select.options[i].style.display = txt.includes(searchInput) ? '' : 'none';
-            }
-        }
-    </script>
 </head>
 <body>
 
@@ -151,11 +131,8 @@ $citizens = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <p class="error"><?php echo htmlspecialchars($errorUpload); ?></p>
     <?php endif; ?>
 
-    <form action="dashboard.php?page=provide_download" method="post" enctype="multipart/form-data">
+    <form action="../dashboard.php?page=provide_download" method="post" enctype="multipart/form-data">
         <input type="hidden" name="action" value="upload_new">
-
-        <label for="citizenSearch2">Bürger suchen:</label>
-        <input type="text" id="citizenSearch2" placeholder="Suchbegriff eingeben..." onkeyup="filterCitizens2()">
 
         <label for="citizenSelect2">Bürger auswählen:</label>
         <select name="citizen_id" id="citizenSelect2" required>
