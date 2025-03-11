@@ -3,13 +3,7 @@ session_start();
 
 // Falls bereits ein Benutzer eingeloggt ist...
 if (isset($_SESSION['user']) && $_SESSION['user']['username'] !== 'gast') {
-    if ($_SESSION['user']['role'] === 'citizen') {
-        header("Location: citizen/dashboard.php");
-        exit;
-    } else {
-        header("Location: employee/dashboard.php");
-        exit;
-    }
+    header("Location: dashboard.php");
 }
 
 $error = '';
@@ -40,13 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($user['password'] && password_verify($password, $user['password'])) {
             $_SESSION['user'] = $user;
             // Weiterleitung
-            if ($user['role'] === 'citizen') {
-                header("Location: citizen/dashboard.php");
-                exit;
-            } else {
-                header("Location: employee/dashboard.php");
-                exit;
-            }
+            header("Location: dashboard.php");
         } else {
             $error = "Ungültige Zugangsdaten.";
         }
