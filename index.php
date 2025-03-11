@@ -37,8 +37,8 @@
 
 <!-- Leistungs-Bereich -->
 <section id="services">
+    <h2>Unsere Leistungen</h2>
     <div class="container">
-        <h2>Unsere Leistungen</h2>
         <div class="cards">
             <div class="card">
                 <h3>Bürgerdienste</h3>
@@ -61,11 +61,14 @@
 
 <!-- News-Bereich -->
 <section id="news">
+    <h2>Aktuelles</h2>
     <div class="container">
-        <h2>Aktuelles</h2>
         <article>
-            <h3>Neues Bürgerportal gestartet</h3>
-            <p>Erfahren Sie, wie unser neues digitales Portal den Service verbessert.</p>
+            <h3>Bert Meier von seinem Hund Bello gebissen</h3>
+            <div class="news-content">
+                <img src="images/hund.jpg" alt="Hund Bello" class="news-image">
+                <p>Bert Meier wurde gestern von seinem Hund Bello gebissen. Er wurde sofort ins Krankenhaus gebracht und behandelt. Glücklicherweise sind die Verletzungen nicht schwerwiegend.</p>
+            </div>
             <a href="#">Zum Artikel</a>
         </article>
     </div>
@@ -73,8 +76,8 @@
 
 <!-- Kontakt-Bereich -->
 <section id="contact">
+    <h2>Kontakt</h2>
     <div class="container">
-        <h2>Kontakt</h2>
         <p>
             Landratsamt Ansbach<br>
             Musterstraße 1, 91522 Ansbach<br>
