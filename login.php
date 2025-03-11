@@ -1,19 +1,6 @@
 <?php
 session_start();
 
-// Falls bereits ein Benutzer eingeloggt ist und dieser nicht "gast" ist, direkt zum passenden Dashboard weiterleiten
-if (isset($_SESSION['user']) && $_SESSION['user']['username'] !== 'gast') {
-    if ($_SESSION['user']['role'] === 'citizen') {
-        header("Location: citizen/dashboard.php");
-        exit;
-    } else {
-        header("Location: employee/dashboard.php");
-        exit;
-    }
-}
-
-$error = '';
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = trim($_POST['username']);
     $password = trim($_POST['password']);
