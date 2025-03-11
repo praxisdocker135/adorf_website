@@ -1,9 +1,5 @@
 <?php
-// Wichtig: session_start() läuft bereits in dashboard.php,
-// daher ist $_SESSION['user'] hier verfügbar.
 
-// Optionaler Rollencheck:
-// In diesem Fall erlauben wir allen, die eingeloggt sind (citizen, employee, admin).
 if (!isset($_SESSION['user'])) {
     // Kein Zugriff, wenn nicht eingeloggt
     header("Location: ../login.php");
