@@ -11,7 +11,7 @@
 <!-- Header mit Logo und Navigation -->
 <header>
     <div class="header-container">
-        <img src="images/logo.png" alt="Landratsamt Ansbach Logo" class="logo">
+        <img src="images/logo.jpg" alt="Landratsamt Ansbach Logo" class="logo">
         <nav>
             <ul>
                 <li><a href="#hero">Startseite</a></li>
