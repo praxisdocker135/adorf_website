@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 <header>
     <div class="header-container">
-        <img src="images/logo.png" alt="Landratsamt Ansbach Logo" class="logo">
+        <img src="images/logo.jpg" alt="Landratsamt Ansbach Logo" class="logo">
         <nav>
             <ul>
                 <li><a href="index.php">Startseite</a></li>

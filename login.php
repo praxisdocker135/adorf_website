@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <!-- HEADER-BANNER (wie auf der öffentlichen Seite) -->
 <header>
     <div class="header-container">
-        <img src="images/logo.png" alt="Landratsamt Ansbach Logo" class="logo">
+        <img src="images/logo.jpg" alt="Landratsamt Ansbach Logo" class="logo">
         <nav>
             <ul>
                 <li><a href="index.php">Startseite</a></li>

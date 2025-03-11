@@ -31,7 +31,7 @@ $downloads = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!-- HEADER-BANNER (wie auf index.php & login.php) -->
 <header>
     <div class="header-container">
-        <img src="images/logo.png" alt="Landratsamt Ansbach Logo" class="logo">
+        <img src="images/logo.jpg" alt="Landratsamt Ansbach Logo" class="logo">
         <nav>
             <ul>
                 <li><a href="index.php">Startseite</a></li>
