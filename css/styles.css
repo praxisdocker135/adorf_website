@@ -80,6 +80,13 @@ header {
   margin-top: 20px;
 }
 
+#hero .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
 /* =============== */
 /* 4) Sektionen auf der öffentlichen Seite */
 /* =============== */
