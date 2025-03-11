@@ -1,5 +1,4 @@
 <?php
-// downloads.php
 session_start();
 
 // Datenbankverbindungsdaten
@@ -14,7 +13,8 @@ try {
     die("Datenbankfehler: " . $e->getMessage());
 }
 
-// Lade alle öffentlichen Downloads (is_standard = 1)
+// Hier laden wir alle öffentlichen Downloads (is_standard = 1),
+// oder falls deine Logik anders ist: Lade alle "public downloads".
 $stmt = $pdo->prepare("SELECT * FROM downloads WHERE is_standard = 1 ORDER BY upload_date DESC");
 $stmt->execute();
 $downloads = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -24,27 +24,59 @@ $downloads = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Öffentliche Downloads</title>
+    <!-- Gleiche CSS-Datei wie deine anderen Seiten -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <h1>Öffentliche Downloads</h1>
-    <div class="download-list">
-        <?php if(count($downloads) > 0): ?>
+<!-- HEADER-BANNER (wie auf index.php & login.php) -->
+<header>
+    <div class="header-container">
+        <img src="images/logo.png" alt="Landratsamt Ansbach Logo" class="logo">
+        <nav>
             <ul>
-                <?php foreach($downloads as $download): ?>
-                    <li>
-                        <strong><?php echo htmlspecialchars($download['file_name']); ?></strong><br>
-                        <a href="files/downloads/<?php echo htmlspecialchars($download['file_path']); ?>" download>
+                <li><a href="index.php">Startseite</a></li>
+                <li><a href="login.php">Login</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="form-container">
+    <h2>Öffentliche Downloads</h2>
+    <?php if (count($downloads) > 0): ?>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Dateiname</th>
+                <th>Hochgeladen am</th>
+                <th>Download</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($downloads as $dl): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($dl['file_name']); ?></td>
+                    <td><?php echo htmlspecialchars($dl['upload_date']); ?></td>
+                    <td>
+                        <!-- Annahme: Dateien liegen in /files/downloads/ -->
+                        <a href="files/downloads/<?php echo htmlspecialchars($dl['file_path']); ?>" download>
                             Herunterladen
                         </a>
-                        <br>
-                        <small>Hochgeladen am: <?php echo htmlspecialchars($download['upload_date']); ?></small>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        <?php else: ?>
-            <p>Keine Downloads verfügbar.</p>
-        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php else: ?>
+        <p>Keine öffentlichen Downloads vorhanden.</p>
+    <?php endif; ?>
+</div>
+
+<!-- Optional: Footer -->
+<footer>
+    <div class="container">
+        <p>&copy; 2025 Landratsamt Ansbach. Alle Rechte vorbehalten.</p>
     </div>
+</footer>
 </body>
 </html>
