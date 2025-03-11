@@ -120,7 +120,7 @@ $pendingUsers = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <td><?php echo $status; ?></td>
                     <td>
                         <!-- Reset-Button => ?reset_id=XYZ -->
-                        <a class="btn" href="dashboard.php?page=pending_accounts&amp;reset_id=<?php echo $user['id']; ?>"
+                        <a class="btn" href="../dashboard.php?page=pending_accounts&amp;reset_id=<?php echo $user['id']; ?>"
                            onclick="return confirm('Passwort wirklich zurücksetzen?');">
                             Passwort zurücksetzen
                         </a>
