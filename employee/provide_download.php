@@ -117,62 +117,7 @@ $citizens = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Download bereitstellen</title>
-    <style>
-        .form-container {
-            max-width: 600px;
-            margin: 20px auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            margin-bottom: 40px;
-        }
-        .form-container h2 {
-            text-align: center;
-        }
-        .message {
-            text-align: center;
-            color: green;
-            margin-bottom: 15px;
-        }
-        .error {
-            text-align: center;
-            color: red;
-            margin-bottom: 15px;
-        }
-        .form-container form {
-            display: flex;
-            flex-direction: column;
-        }
-        label {
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        select, button, input[type="text"], input[type="file"] {
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-        }
-        button {
-            background: #003366;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        /* Einfaches CSS/JS für Suchfeld */
-        .citizen-search-wrapper {
-            position: relative;
-        }
-        #citizenSearch, #citizenSearch2 {
-            margin-bottom: 5px;
-        }
-        select {
-            width: 100%;
-            box-sizing: border-box;
-        }
-    </style>
+    <link rel="stylesheet" href="css/styles.css">
     <script>
         // Filtern der Bürger (Select) in erstem Formular
         function filterCitizens1() {

@@ -73,60 +73,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <title>Mitarbeiterkonto erstellen</title>
     <link rel="stylesheet" href="../css/styles.css">
-    <style>
-        .form-container {
-            max-width: 400px;
-            margin: 20px auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .form-container h2 {
-            text-align: center;
-        }
-        .form-container .message {
-            text-align: center;
-            color: green;
-            margin-bottom: 15px;
-        }
-        .form-container .error {
-            text-align: center;
-            color: red;
-            margin-bottom: 15px;
-        }
-        .form-container form {
-            display: flex;
-            flex-direction: column;
-        }
-        .form-container label {
-            margin-bottom: 5px;
-        }
-        .form-container select,
-        .form-container input {
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-        }
-        .form-container button {
-            padding: 10px;
-            background: #003366;
-            color: #fff;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .back-link {
-            text-align: center;
-            margin-top: 10px;
-        }
-        .back-link a {
-            color: #003366;
-            text-decoration: none;
-        }
-    </style>
 </head>
 <body>
 <div class="form-container">

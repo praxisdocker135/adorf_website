@@ -85,69 +85,7 @@ $standardDownloads = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Standard-Downloads verwalten</title>
-    <style>
-        .container {
-            max-width: 700px;
-            margin: 20px auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        h2 {
-            text-align: center;
-        }
-        .message {
-            text-align: center;
-            color: green;
-            margin-bottom: 15px;
-        }
-        .error {
-            text-align: center;
-            color: red;
-            margin-bottom: 15px;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 30px;
-        }
-        form label {
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        form input[type="file"] {
-            margin-bottom: 15px;
-        }
-        form button {
-            width: 150px;
-            background: #003366;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            border-radius: 3px;
-            padding: 10px;
-            font-size: 16px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        table th, td {
-            border: 1px solid #ccc;
-            padding: 8px;
-        }
-        table th {
-            background: #f4f4f4;
-        }
-        .delete-link {
-            color: red;
-            text-decoration: none;
-        }
-        .delete-link:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 <div class="container">

@@ -41,30 +41,7 @@ $contacts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Kontaktformulare verwalten</title>
-    <style>
-        .contact-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .contact-table th,
-        .contact-table td {
-            border: 1px solid #ccc;
-            padding: 8px;
-        }
-        .contact-table th {
-            background: #f4f4f4;
-        }
-        .delete-link {
-            color: red;
-            text-decoration: none;
-        }
-        .delete-link:hover {
-            text-decoration: underline;
-        }
-        .message {
-            margin: 10px 0;
-        }
-    </style>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 <h2>Kontaktformulare verwalten</h2>

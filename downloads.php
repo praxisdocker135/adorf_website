@@ -24,32 +24,7 @@ $downloads = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Öffentliche Downloads</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        h1 {
-            text-align: center;
-        }
-        .download-list {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        .download-list ul {
-            list-style: none;
-            padding: 0;
-        }
-        .download-list li {
-            margin: 10px 0;
-            padding: 10px;
-            border: 1px solid #ccc;
-        }
-        .download-list a {
-            text-decoration: none;
-            color: #007BFF;
-        }
-    </style>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <h1>Öffentliche Downloads</h1>

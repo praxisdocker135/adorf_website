@@ -44,56 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Login</title>
     <!-- Externe CSS-Datei einbinden -->
     <link rel="stylesheet" href="css/styles.css">
-    <style>
-        /* Falls in deiner styles.css kein spezieller Login-Bereich definiert ist */
-        .login-container {
-            max-width: 400px;
-            margin: 100px auto;
-            padding: 20px;
-            background: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .login-container h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .login-container form {
-            display: flex;
-            flex-direction: column;
-        }
-        .login-container label {
-            margin-bottom: 5px;
-        }
-        .login-container input {
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-        }
-        .login-container button {
-            padding: 10px;
-            border: none;
-            background: #003366;
-            color: #fff;
-            border-radius: 3px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .login-container .error {
-            color: red;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        .login-container .reset-link {
-            text-align: center;
-            margin-top: 10px;
-        }
-        .login-container .reset-link a {
-            color: #003366;
-            text-decoration: none;
-        }
-    </style>
 </head>
 <body>
     <div class="login-container">
