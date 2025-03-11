@@ -141,53 +141,7 @@ $citizens = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 <body>
 
-<!-- 1) Standard-Download zuweisen -->
-<div class="form-container">
-    <h2>Vorhandenen Standard-Download zuweisen</h2>
-    <?php if ($messageStandard): ?>
-        <p class="message"><?php echo htmlspecialchars($messageStandard); ?></p>
-    <?php endif; ?>
-    <?php if ($errorStandard): ?>
-        <p class="error"><?php echo htmlspecialchars($errorStandard); ?></p>
-    <?php endif; ?>
-
-    <form action="dashboard.php?page=provide_download" method="post">
-        <input type="hidden" name="action" value="assign_standard">
-
-        <label for="download_id">Standarddownload auswählen:</label>
-        <select name="download_id" id="download_id" required>
-            <option value="">-- Bitte wählen --</option>
-            <?php foreach ($standardDownloads as $sd): ?>
-                <option value="<?php echo $sd['id']; ?>">
-                    <?php echo htmlspecialchars($sd['file_name']); ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-
-        <label for="citizenSearch">Bürger suchen:</label>
-        <input type="text" id="citizenSearch" placeholder="Suchbegriff eingeben..." onkeyup="filterCitizens1()">
-
-        <label for="citizenSelect1">Bürger auswählen:</label>
-        <select name="citizen_id" id="citizenSelect1" required>
-            <option value="">-- Bitte wählen --</option>
-            <?php foreach ($citizens as $c): ?>
-                <?php
-                $displayText = $c['username'];
-                if ($c['first_name'] || $c['last_name']) {
-                    $displayText .= " - " . $c['first_name'] . " " . $c['last_name'];
-                }
-                ?>
-                <option value="<?php echo $c['id']; ?>">
-                    <?php echo htmlspecialchars($displayText); ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-
-        <button type="submit">Zuweisen</button>
-    </form>
-</div>
-
-<!-- 2) Neue Datei hochladen und zuweisen -->
+<!-- Neue Datei hochladen und zuweisen -->
 <div class="form-container">
     <h2>Neue Datei hochladen &amp; zuweisen</h2>
     <?php if ($messageUpload): ?>
