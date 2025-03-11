@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Nur Admins dürfen hier zugreifen
 if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
