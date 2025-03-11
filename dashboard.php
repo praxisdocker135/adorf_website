@@ -22,7 +22,7 @@ $user = $_SESSION['user'];
 <!-- Header-Banner -->
 <header>
     <div class="header-container">
-        <img src="logo.png" alt="Landratsamt Ansbach Logo" class="logo">
+        <img src="images/logo.jpg" alt="Landratsamt Ansbach Logo" class="logo">
         <nav>
             <ul>
                 <li><a href="logout.php">Logout</a></li>
@@ -41,9 +41,11 @@ $user = $_SESSION['user'];
             echo '<a href="dashboard.php?page=downloads">Meine Downloads</a>';
             echo '<a href="dashboard.php?page=upload">Datei Upload</a>';
             echo '<a href="dashboard.php?page=profile">Mein Profil</a>';
+            echo '<a href="dashboard.php?page=change_password">Passwort ändern</a>';
         } else { // Navigation für Mitarbeiter (und Admin)
             echo '<a href="dashboard.php?page=manage_contacts">Kontaktformulare verwalten</a>';
             echo '<a href="dashboard.php?page=provide_download">Download bereitstellen</a>';
+            echo '<a href="dashboard.php?page=change_password">Passwort ändern</a>';
             // Zusätzliche Menüpunkte für Admins
             if ($user['role'] === 'admin') {
                 echo '<a href="dashboard.php?page=reset_password">Passwörter zurücksetzen</a>';
@@ -62,6 +64,7 @@ $user = $_SESSION['user'];
             // Sicherheitsüberprüfung: nur erlaubte Werte verarbeiten
             $allowed_pages = [
                 'downloads',
+                'manage_standard_downloads',
                 'upload',
                 'profile',
                 'manage_contacts',
@@ -69,7 +72,8 @@ $user = $_SESSION['user'];
                 'reset_password',
                 'create_account',
                 'pending_accounts',
-                'manage_standard_downloads'
+                'change_password'
+
             ];
             if (in_array($page, $allowed_pages)) {
                 // Inhalte in Unterordnern (citizen/ oder employee/) laden
@@ -100,6 +104,9 @@ $user = $_SESSION['user'];
                         break;
                     case 'manage_standard_downloads':
                         include 'employee/manage_standard_downloads.php';
+                        break;
+                    case 'change_password':
+                        include 'change_password.php';
                         break;
                     default:
                         echo "<h2>Willkommen, " . htmlspecialchars($user['username']) . "!</h2>";
