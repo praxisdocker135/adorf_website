@@ -64,9 +64,6 @@ header {
 /* =============== */
 
 #hero {
-  /* Beispiel-Hintergrund: Anpassen oder entfernen */
-  background: url('images/hero.jpg') no-repeat center center/cover;
-  color: #fff;
   text-align: center;
   padding: 100px 0;
 }
@@ -97,7 +94,7 @@ section {
 
 h2 {
   text-align: center;
-  margin-bottom: 40px;
+  padding: 20px;
 }
 
 /* Karten-Layout für Leistungen */
@@ -308,7 +305,7 @@ footer {
 /* Container um Sidebar & Hauptbereich */
 .container {
   display: flex;
-  height: 100vh;
+  padding: 10px;
 }
 
 /* Linke Sidebar im Dashboard */
