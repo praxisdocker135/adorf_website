@@ -117,7 +117,7 @@ $citizens = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Download bereitstellen</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css">
     <script>
         // Filtern der Bürger (Select) in erstem Formular
         function filterCitizens1() {

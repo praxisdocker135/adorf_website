@@ -41,7 +41,7 @@ $contacts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Kontaktformulare verwalten</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
 <h2>Kontaktformulare verwalten</h2>
