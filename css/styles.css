@@ -1,4 +1,7 @@
-/* Allgemeine Einstellungen */
+/* =============== */
+/* 1) Grundreset & Basis */
+/* =============== */
+
 * {
   margin: 0;
   padding: 0;
@@ -7,50 +10,61 @@
 
 body {
   font-family: Arial, sans-serif;
-  line-height: 1.6;
+  background: #f4f4f4;
   color: #333;
+  line-height: 1.6;
 }
 
-/* Container für zentrierten Inhalt */
-.container {
-  width: 90%;
-  max-width: 1200px;
-  margin: auto;
-}
+/* =============== */
+/* 2) Header & Navigation (öffentliche Seite & Dashboard-Header) */
+/* =============== */
 
-/* Header */
+/* Allgemeiner Header – dunkler Hintergrund, weißer Text */
 header {
-  background: #003366;
+  background-color: #003366;
   color: #fff;
-  padding: 1em 0;
+  padding: 10px 0;
 }
 
+/* Container im Header: Logo links, Navigation rechts */
 .header-container {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.logo {
+/* Logo-Größe anpassen */
+.header-container img.logo {
   max-height: 50px;
 }
 
-nav ul {
+/* Navigation im Header */
+.header-container nav ul {
   list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
 }
 
-nav ul li {
+.header-container nav ul li {
   margin-left: 20px;
 }
 
-nav ul li a {
+.header-container nav ul li a {
   color: #fff;
   text-decoration: none;
+  font-weight: bold;
 }
 
-/* Hero-Bereich */
+/* =============== */
+/* 3) Hero-Bereich (Startseite) */
+/* =============== */
+
 #hero {
+  /* Beispiel-Hintergrund: Anpassen oder entfernen */
   background: url('hero.jpg') no-repeat center center/cover;
   color: #fff;
   text-align: center;
@@ -66,7 +80,10 @@ nav ul li a {
   margin-top: 20px;
 }
 
-/* Sektionen */
+/* =============== */
+/* 4) Sektionen auf der öffentlichen Seite */
+/* =============== */
+
 section {
   padding: 60px 0;
 }
@@ -101,7 +118,10 @@ h2 {
   color: #003366;
 }
 
-/* Kontaktformular */
+/* =============== */
+/* 5) Formulare, z. B. Kontaktformular (auf Startseite) */
+/* =============== */
+
 form input,
 form textarea {
   width: 100%;
@@ -120,7 +140,10 @@ form button {
   border-radius: 3px;
 }
 
-/* Footer */
+/* =============== */
+/* 6) Footer */
+/* =============== */
+
 footer {
   background: #333;
   color: #fff;
@@ -128,13 +151,230 @@ footer {
   padding: 20px 0;
 }
 
-/* Responsive Anpassung */
+/* =============== */
+/* 7) Login-Seite */
+/* =============== */
+
+.login-container {
+  max-width: 400px;
+  margin: 100px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.login-container h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.login-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-container label {
+  margin-bottom: 5px;
+}
+
+.login-container input {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.login-container button {
+  padding: 10px;
+  border: none;
+  background: #003366;
+  color: #fff;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.login-container .error {
+  color: red;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.login-container .reset-link {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.login-container .reset-link a {
+  color: #003366;
+  text-decoration: none;
+}
+
+/* =============== */
+/* 8) Generische Container für Formulare & Boxen (z. B. Admin/Mitarbeiter-Seiten) */
+/* =============== */
+
+.form-container {
+  max-width: 600px;
+  margin: 20px auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.form-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Erfolgs- und Fehlermeldungen */
+.message {
+  text-align: center;
+  color: green;
+  margin-bottom: 15px;
+}
+
+.error {
+  text-align: center;
+  color: red;
+  margin-bottom: 15px;
+}
+
+/* =============== */
+/* 9) Tabelle für Admin/Mitarbeiter (z. B. Kontaktformulare, Downloads) */
+/* =============== */
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+
+.table th {
+  background: #f4f4f4;
+}
+
+/* =============== */
+/* 10) Buttons (allgemein) */
+/* =============== */
+
+.btn {
+  background: #003366;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  text-decoration: none; /* Falls es ein Link-Element ist */
+  display: inline-block; /* Damit es als Link gut wirkt */
+}
+
+.btn:hover {
+  background: #0055aa;
+}
+
+/* =============== */
+/* 11) Links zum Löschen oder besondere Links */
+/* =============== */
+
+.delete-link {
+  color: red;
+  text-decoration: none;
+}
+
+.delete-link:hover {
+  text-decoration: underline;
+}
+
+/* =============== */
+/* 12) Dashboard-Layout (Seitenleiste + Hauptinhalt) */
+/* =============== */
+
+/* Container um Sidebar & Hauptbereich */
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Linke Sidebar im Dashboard */
+.sidebar {
+  width: 250px;
+  background-color: #003366;
+  color: #fff;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.sidebar h2 {
+  margin-top: 0;
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.sidebar a {
+  color: #fff;
+  text-decoration: none;
+  display: block;
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 3px;
+}
+
+.sidebar a:hover {
+  background-color: #0055aa;
+}
+
+/* Hauptbereich rechts */
+.main-content {
+  flex: 1;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  background: #fff;
+}
+
+/* =============== */
+/* 13) Responsive Anpassungen */
+/* =============== */
+
 @media (max-width: 768px) {
+
+  /* Header-Container untereinander statt nebeneinander */
   .header-container {
     flex-direction: column;
   }
+
+  /* Karten in der öffentlichen Seite untereinander platzieren */
   .cards {
     flex-direction: column;
     align-items: center;
+  }
+
+  /* Dashboard: Sidebar nach oben klappen o. ä. (einfache Lösung) */
+  .container {
+    flex-direction: column;
+    height: auto; /* damit nicht erzwungen voll */
+  }
+  .sidebar {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .sidebar a {
+    margin: 5px;
+  }
+  .main-content {
+    width: 100%;
   }
 }

@@ -17,82 +17,6 @@ $user = $_SESSION['user'];
     <title>Dashboard</title>
     <!-- Externe Stylesheet einbinden -->
     <link rel="stylesheet" href="css/styles.css">
-    <style>
-        /* Zusätzliche Inline-Styles für das Dashboard-Layout */
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
-        }
-        /* Header-Banner oben */
-        header {
-            background-color: #003366;
-            color: #fff;
-            padding: 10px 0;
-        }
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .header-container img.logo {
-            max-height: 50px;
-        }
-        .header-container nav ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-        }
-        .header-container nav ul li {
-            margin-left: 20px;
-        }
-        .header-container nav ul li a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .container {
-            display: flex;
-            height: calc(100vh - 80px); /* 80px als Beispiel für Header-Höhe */
-        }
-        .sidebar {
-            width: 250px;
-            background-color: #003366;
-            color: #fff;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow-y: auto;
-        }
-        .sidebar h2 {
-            margin-top: 0;
-            font-size: 20px;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .sidebar a {
-            color: #fff;
-            text-decoration: none;
-            display: block;
-            padding: 10px;
-            margin-bottom: 5px;
-            border-radius: 3px;
-        }
-        .sidebar a:hover {
-            background-color: #0055aa;
-        }
-        .main-content {
-            flex: 1;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow-y: auto;
-            background: #fff;
-        }
-    </style>
 </head>
 <body>
 <!-- Header-Banner -->
@@ -126,7 +50,7 @@ $user = $_SESSION['user'];
                 echo '<a href="dashboard.php?page=admin_reset_citizens">Bürger-Passwörter zurücksetzen</a>';
                 echo '<a href="dashboard.php?page=create_account">Mitarbeiterkonto erstellen</a>';
                 echo '<a href="dashboard.php?page=pending_accounts">Pending Bürger Accounts</a>';
-                echo '<a href="dashboard.php?page=manage_standard_downloads">Pending Bürger Accounts</a>';
+                echo '<a href="dashboard.php?page=manage_standard_downloads">Standard Downloads bearbeiten</a>';
             }
         }
         ?>
