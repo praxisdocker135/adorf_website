@@ -83,7 +83,7 @@
             Musterstraße 1, 91522 Ansbach<br>
             Telefon: 0981 123456
         </p>
-        <form action="#" method="post">
+        <form action="contact_process.php" method="post">
             <input type="text" name="name" placeholder="Ihr Name" required>
             <input type="email" name="email" placeholder="Ihre E-Mail" required>
             <textarea name="message" placeholder="Ihre Nachricht" required></textarea>
