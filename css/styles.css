@@ -1,0 +1,140 @@
+/* Allgemeine Einstellungen */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Container für zentrierten Inhalt */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* Header */
+header {
+  background: #003366;
+  color: #fff;
+  padding: 1em 0;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  max-height: 50px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+}
+
+nav ul li {
+  margin-left: 20px;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Hero-Bereich */
+#hero {
+  background: url('hero.jpg') no-repeat center center/cover;
+  color: #fff;
+  text-align: center;
+  padding: 100px 0;
+}
+
+#hero .btn {
+  display: inline-block;
+  background: #ffcc00;
+  color: #003366;
+  padding: 10px 20px;
+  text-decoration: none;
+  margin-top: 20px;
+}
+
+/* Sektionen */
+section {
+  padding: 60px 0;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* Karten-Layout für Leistungen */
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.card {
+  background: #f4f4f4;
+  padding: 20px;
+  flex: 1;
+  min-width: 250px;
+  max-width: 350px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.card a {
+  display: inline-block;
+  margin-top: 15px;
+  text-decoration: none;
+  color: #003366;
+}
+
+/* Kontaktformular */
+form input,
+form textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+form button {
+  padding: 10px 20px;
+  background: #003366;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+/* Footer */
+footer {
+  background: #333;
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
+}
+
+/* Responsive Anpassung */
+@media (max-width: 768px) {
+  .header-container {
+    flex-direction: column;
+  }
+  .cards {
+    flex-direction: column;
+    align-items: center;
+  }
+}
