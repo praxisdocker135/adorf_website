@@ -46,8 +46,7 @@ $user = $_SESSION['user'];
             echo '<a href="dashboard.php?page=provide_download">Download bereitstellen</a>';
             // Zusätzliche Menüpunkte für Admins
             if ($user['role'] === 'admin') {
-                echo '<a href="dashboard.php?page=admin_reset_employees">Mitarbeiter-Passwörter zurücksetzen</a>';
-                echo '<a href="dashboard.php?page=admin_reset_citizens">Bürger-Passwörter zurücksetzen</a>';
+                echo '<a href="dashboard.php?page=reset_password">Passwörter zurücksetzen</a>';
                 echo '<a href="dashboard.php?page=create_account">Mitarbeiterkonto erstellen</a>';
                 echo '<a href="dashboard.php?page=pending_accounts">Pending Bürger Accounts</a>';
                 echo '<a href="dashboard.php?page=manage_standard_downloads">Standard Downloads bearbeiten</a>';
@@ -67,8 +66,7 @@ $user = $_SESSION['user'];
                 'profile',
                 'manage_contacts',
                 'provide_download',
-                'admin_reset_employees',
-                'admin_reset_citizens',
+                'reset_password',
                 'create_account',
                 'pending_accounts',
                 'manage_standard_downloads'
@@ -91,11 +89,8 @@ $user = $_SESSION['user'];
                     case 'provide_download':
                         include 'employee/provide_download.php';
                         break;
-                    case 'admin_reset_employees':
-                        include 'employee/admin_reset_employees.php';
-                        break;
-                    case 'admin_reset_citizens':
-                        include 'employee/admin_reset_citizens.php';
+                    case 'reset_password':
+                        include 'employee/reset_password.php';
                         break;
                     case 'create_account':
                         include 'employee/create_account.php';
