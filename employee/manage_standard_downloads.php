@@ -1,7 +1,7 @@
 <?php
 // Da dieses Script über dashboard.php?page=manage_standard_downloads eingebunden wird,
 // sollte session_start() bereits im dashboard.php erfolgt sein.
-// Prüfen, ob der User Admin ist:
+// Prüfe, ob der User Admin ist:
 if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
     header("Location: ../login.php");
     exit;
@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 if ($stmt->execute([
                     ':file_name'   => $origName,
                     ':file_path'   => $newName,
-                    ':uploaded_by' => $_SESSION['user']['id'] // admin, der hochlädt
+                    ':uploaded_by' => $_SESSION['user']['id'] // admin
                 ])) {
                     $message = "Standard-Download wurde erfolgreich hochgeladen.";
                 } else {
@@ -85,11 +85,14 @@ $standardDownloads = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Standard-Downloads verwalten</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <!-- Gleiche CSS-Datei einbinden wie bei den anderen Seiten -->
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-<div class="container">
+<div class="form-container">
     <h2>Standard-Downloads verwalten</h2>
+
+    <!-- Meldungen (Erfolg oder Fehler) -->
     <?php if ($message): ?>
         <p class="message"><?php echo htmlspecialchars($message); ?></p>
     <?php endif; ?>
@@ -104,25 +107,27 @@ $standardDownloads = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <label for="file">Neue Datei hochladen (PDF, JPG, PNG):</label>
         <input type="file" name="file" id="file" accept=".pdf,image/jpeg,image/png" required>
 
-        <button type="submit">Hochladen</button>
+        <button type="submit" class="btn">Hochladen</button>
     </form>
 
     <!-- Tabelle mit allen vorhandenen Standard-Downloads -->
     <?php if (count($standardDownloads) > 0): ?>
-        <table>
+        <table class="table">
+            <thead>
             <tr>
                 <th>ID</th>
                 <th>Dateiname</th>
                 <th>Hochgeladen am</th>
                 <th>Aktionen</th>
             </tr>
+            </thead>
+            <tbody>
             <?php foreach ($standardDownloads as $sd): ?>
                 <tr>
                     <td><?php echo $sd['id']; ?></td>
                     <td><?php echo htmlspecialchars($sd['file_name']); ?></td>
                     <td><?php echo htmlspecialchars($sd['upload_date']); ?></td>
                     <td>
-                        <!-- Löschen-Link mit GET-Parameter -->
                         <a class="delete-link"
                            href="dashboard.php?page=manage_standard_downloads&amp;delete_id=<?php echo $sd['id']; ?>"
                            onclick="return confirm('Diesen Standard-Download wirklich löschen?');">
@@ -131,6 +136,7 @@ $standardDownloads = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </td>
                 </tr>
             <?php endforeach; ?>
+            </tbody>
         </table>
     <?php else: ?>
         <p>Keine Standard-Downloads vorhanden.</p>
