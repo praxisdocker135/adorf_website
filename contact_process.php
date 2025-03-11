@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
   
   // Datenbankverbindung (Passe DSN, Benutzer und Passwort an!)
-  $dsn    = "mysql:host=localhost;dbname=contact;charset=utf8";
+  $dsn    = "mysql:host=localhost;dbname=adorf_website;charset=utf8";
   $dbUser = "praxisblockDB";
   $dbPass = "kcntmXThr9y3XhCZwGA.";
   
