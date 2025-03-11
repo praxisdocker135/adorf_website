@@ -65,7 +65,7 @@ header {
 
 #hero {
   /* Beispiel-Hintergrund: Anpassen oder entfernen */
-  background: url('hero.jpg') no-repeat center center/cover;
+  background: url('images/hero.jpg') no-repeat center center/cover;
   color: #fff;
   text-align: center;
   padding: 100px 0;
