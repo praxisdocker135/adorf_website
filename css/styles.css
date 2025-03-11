@@ -295,9 +295,12 @@ footer {
   border-collapse: collapse;
 }
 
-.table th,
+.table th{
+  border: 1px solid #ccc;
+  padding: 8px;
+}
 .table td {
-  border: 1px solid #0055aa;
+  border: 1px solid #ccc;
   padding: 8px;
 }
 
