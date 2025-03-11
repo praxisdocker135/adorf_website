@@ -1,12 +1,6 @@
 <?php
 session_start();
 
-// Wenn ein bereits eingeloggter User diese Seite aufruft, könntest du ihn weiterleiten.
-// Z. B. falls er kein Admin ist oder man registriert sich nur als Gast.
-// if (isset($_SESSION['user'])) {
-//     header("Location: index.php");
-//     exit;
-// }
 
 $error = '';
 $message = '';
@@ -16,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $firstName = trim($_POST['first_name']);
     $lastName  = trim($_POST['last_name']);
     $address   = trim($_POST['address']);
-    $birthdate = trim($_POST['birthdate']);  // Format: YYYY-MM-DD o. Ä.
+    $birthdate = trim($_POST['birthdate']);  // Format: DD/MM/YYYY
     $email     = trim($_POST['email']);
 
     // Grundlegende Validierung
@@ -88,6 +82,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+<header>
+    <div class="header-container">
+        <img src="images/logo.png" alt="Landratsamt Ansbach Logo" class="logo">
+        <nav>
+            <ul>
+                <li><a href="index.php">Startseite</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
 <div class="form-container">
     <h2>Bürger-Registrierung</h2>
 
@@ -108,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label for="address">Adresse:</label>
         <input type="text" name="address" id="address" required>
 
-        <label for="birthdate">Geburtsdatum (YYYY-MM-DD):</label>
+        <label for="birthdate">Geburtsdatum (DD-MM-YYYY):</label>
         <input type="date" name="birthdate" id="birthdate" required>
 
         <label for="email">E-Mail:</label>

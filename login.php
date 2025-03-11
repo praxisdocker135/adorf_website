@@ -1,11 +1,24 @@
 <?php
 session_start();
 
+// Falls bereits ein Benutzer eingeloggt ist...
+if (isset($_SESSION['user']) && $_SESSION['user']['username'] !== 'gast') {
+    if ($_SESSION['user']['role'] === 'citizen') {
+        header("Location: citizen/dashboard.php");
+        exit;
+    } else {
+        header("Location: employee/dashboard.php");
+        exit;
+    }
+}
+
+$error = '';
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = trim($_POST['username']);
     $password = trim($_POST['password']);
 
-    // Datenbankverbindungsdaten
+    // DB-Verbindungsdaten anpassen
     $dsn    = "mysql:host=localhost;dbname=adorf_website;charset=utf8";
     $dbUser = "praxisblockDB";
     $dbPass = "kcntmXThr9y3XhCZwGA.";
@@ -23,12 +36,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user) {
-        // Prüfen, ob ein Passwort gesetzt ist und ob das eingegebene Passwort korrekt ist
+        // Passwort verifizieren
         if ($user['password'] && password_verify($password, $user['password'])) {
-            // Login erfolgreich – Benutzer in Session speichern
             $_SESSION['user'] = $user;
-            // Weiterleitung basierend auf der Benutzerrolle
-            header("Location: dashboard.php");
+            // Weiterleitung
+            if ($user['role'] === 'citizen') {
+                header("Location: citizen/dashboard.php");
+                exit;
+            } else {
+                header("Location: employee/dashboard.php");
+                exit;
+            }
         } else {
             $error = "Ungültige Zugangsdaten.";
         }
@@ -42,29 +60,42 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <!-- Externe CSS-Datei einbinden -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <div class="login-container">
-        <h1>Login</h1>
-        <?php if ($error): ?>
-            <div class="error"><?php echo htmlspecialchars($error); ?></div>
-        <?php endif; ?>
-        <form action="login.php" method="post">
-            <label for="username">Benutzername:</label>
-            <input type="text" name="username" id="username" required>
-            
-            <label for="password">Passwort:</label>
-            <input type="password" name="password" id="password" required>
-            
-            <button type="submit">Einloggen</button>
-        </form>
-        <div class="reset-link">
-            <a href="reset_request.php">Passwort zurücksetzen</a>
-            <br>
-            <a href="register_citizen.php" class="register-link">Registrieren</a>
-        </div>
+
+<!-- HEADER-BANNER (wie auf der öffentlichen Seite) -->
+<header>
+    <div class="header-container">
+        <img src="images/logo.png" alt="Landratsamt Ansbach Logo" class="logo">
+        <nav>
+            <ul>
+                <li><a href="index.php">Startseite</a></li>
+            </ul>
+        </nav>
     </div>
+</header>
+
+<div class="login-container">
+    <h1>Login</h1>
+    <?php if ($error): ?>
+        <div class="error"><?php echo htmlspecialchars($error); ?></div>
+    <?php endif; ?>
+    <form action="login.php" method="post">
+        <label for="username">Benutzername:</label>
+        <input type="text" name="username" id="username" required>
+
+        <label for="password">Passwort:</label>
+        <input type="password" name="password" id="password" required>
+
+        <button type="submit">Einloggen</button>
+    </form>
+    <div class="reset-link">
+        <a href="reset_request.php">Passwort zurücksetzen</a>
+        <br><br>
+        <a href="register_citizen.php" class="btn">Registrieren</a>
+    </div>
+</div>
+
 </body>
 </html>
