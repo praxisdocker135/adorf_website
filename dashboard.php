@@ -126,6 +126,7 @@ $user = $_SESSION['user'];
                 echo '<a href="dashboard.php?page=admin_reset_citizens">Bürger-Passwörter zurücksetzen</a>';
                 echo '<a href="dashboard.php?page=create_account">Mitarbeiterkonto erstellen</a>';
                 echo '<a href="dashboard.php?page=pending_accounts">Pending Bürger Accounts</a>';
+                echo '<a href="dashboard.php?page=manage_standard_downloads">Pending Bürger Accounts</a>';
             }
         }
         ?>
@@ -145,7 +146,8 @@ $user = $_SESSION['user'];
                 'admin_reset_employees',
                 'admin_reset_citizens',
                 'create_account',
-                'pending_accounts'
+                'pending_accounts',
+                'manage_standard_downloads'
             ];
             if (in_array($page, $allowed_pages)) {
                 // Inhalte in Unterordnern (citizen/ oder employee/) laden
@@ -176,6 +178,9 @@ $user = $_SESSION['user'];
                         break;
                     case 'pending_accounts':
                         include 'employee/pending_accounts.php';
+                        break;
+                    case 'manage_standard_downloads':
+                        include 'employee/manage_standard_downloads.php';
                         break;
                     default:
                         echo "<h2>Willkommen, " . htmlspecialchars($user['username']) . "!</h2>";
