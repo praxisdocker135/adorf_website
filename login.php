@@ -41,13 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Login erfolgreich – Benutzer in Session speichern
             $_SESSION['user'] = $user;
             // Weiterleitung basierend auf der Benutzerrolle
-            if ($user['role'] === 'citizen') {
-                header("Location: citizen/dashboard.php");
-                exit;
-            } else {
-                header("Location: employee/dashboard.php");
-                exit;
-            }
+            header("Location: dashboard.php");
         } else {
             $error = "Ungültige Zugangsdaten.";
         }
