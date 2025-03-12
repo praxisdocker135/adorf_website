@@ -1,6 +1,4 @@
 <?php
-// Da dieses Script über dashboard.php?page=provide_download eingebunden wird,
-// sollte session_start() und ein Rollencheck (employee/admin) bereits im Dashboard erfolgen.
 
 // Datenbankverbindungsdaten
 $dsn    = "mysql:host=localhost;dbname=adorf_website;charset=utf8";

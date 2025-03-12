@@ -1,75 +1,124 @@
 <?php
-
-// Prüfe, ob der Benutzer eingeloggt und Bürger ist
+// Nur eingeloggte Bürger dürfen hier zugreifen
 if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'citizen') {
-    die("Zugriff verweigert. Bitte loggen Sie sich als Bürger ein.");
+    header("Location: ../login.php");
+    exit;
 }
 
 $citizen = $_SESSION['user'];
 
-// Überprüfe, ob das Formular abgeschickt wurde
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+// Datenbankverbindung
+$dsn    = "mysql:host=localhost;dbname=adorf_website;charset=utf8";
+$dbUser = "praxisblockDB";
+$dbPass = "kcntmXThr9y3XhCZwGA.";
 
-    // Prüfe, ob eine Datei hochgeladen wurde
-    if (!isset($_FILES['file']) || $_FILES['file']['error'] != 0) {
-        die("Fehler beim Upload.");
+try {
+    $pdo = new PDO($dsn, $dbUser, $dbPass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Datenbankfehler: " . $e->getMessage());
+}
+
+$message = '';
+$error   = '';
+
+// Mitarbeiterliste laden, damit der Bürger aus einer Select-Liste wählen kann.
+// Hier filtern wir z. B. nach role = 'employee' OR 'admin', wenn du Admin miteinbeziehen willst.
+$stmt = $pdo->prepare("
+    SELECT id, username, first_name, last_name
+    FROM users
+    WHERE role IN ('employee','admin')
+    ORDER BY username
+");
+$stmt->execute();
+$employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Formularverarbeitung
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $employeeId = (int)($_POST['employee_id'] ?? 0);
+
+    // Datei vorhanden?
+    if (!isset($_FILES['file']) || $_FILES['file']['error'] !== UPLOAD_ERR_OK) {
+        $error = "Bitte wählen Sie eine Datei aus.";
     }
-
-    // Erlaubte MIME-Typen
-    $allowed_types = ['application/pdf', 'image/jpeg', 'image/png'];
-    if (!in_array($_FILES['file']['type'], $allowed_types)) {
-        die("Nicht erlaubter Dateityp.");
-    }
-
-    // Hole den angegebenen Mitarbeiter-Benutzernamen aus dem Formular
-    $employee_username = trim($_POST['employee']);
-
-    // Datenbankverbindungsdaten
-    $dsn    = "mysql:host=localhost;dbname=adorf_website;charset=utf8";
-    $dbUser = "praxisblockDB";
-    $dbPass = "kcntmXThr9y3XhCZwGA.";
-
-    try {
-        $pdo = new PDO($dsn, $dbUser, $dbPass);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (PDOException $e) {
-        die("Datenbankfehler: " . $e->getMessage());
-    }
-
-    // Überprüfe, ob der angegebene Mitarbeiter existiert (Mitarbeiter haben z. B. die Rolle 'employee' oder 'admin')
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE username = :username AND role != 'citizen'");
-    $stmt->execute([':username' => $employee_username]);
-    $employee = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if (!$employee) {
-        die("Mitarbeiter nicht gefunden.");
-    }
-
-    // Verzeichnis für Uploads definieren
-    $upload_dir = __DIR__ . '/files/uploads/';
-    if (!is_dir($upload_dir)) {
-        mkdir($upload_dir, 0755, true);
-    }
-
-    // Generiere einen neuen Dateinamen, um Kollisionen zu vermeiden
-    $filename = time() . "_" . basename($_FILES['file']['name']);
-    $target_file = $upload_dir . $filename;
-
-    if (move_uploaded_file($_FILES['file']['tmp_name'], $target_file)) {
-        // Speichere den Upload in der Datenbank
-        $stmt = $pdo->prepare("INSERT INTO uploads (file_name, file_path, citizen_id, target_employee) VALUES (:file_name, :file_path, :citizen_id, :target_employee)");
-        $stmt->execute([
-            ':file_name'      => basename($_FILES['file']['name']),
-            ':file_path'      => $filename,
-            ':citizen_id'     => $citizen['id'],
-            ':target_employee'=> $employee['id']
-        ]);
-
-        echo "Datei erfolgreich hochgeladen.";
+    // Mitarbeiter-ID validieren
+    elseif ($employeeId <= 0) {
+        $error = "Bitte wählen Sie einen Mitarbeiter aus.";
     } else {
-        echo "Fehler beim Speichern der Datei.";
+        // Dateityp prüfen
+        $allowedTypes = ['application/pdf', 'image/jpeg', 'image/png'];
+        if (!in_array($_FILES['file']['type'], $allowedTypes)) {
+            $error = "Nur PDF, JPG oder PNG sind erlaubt.";
+        } else {
+            // Datei hochladen
+            $uploadDir = __DIR__ . '/../files/uploads/';
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0755, true);
+            }
+            $origName   = basename($_FILES['file']['name']);
+            $newName    = time() . '_' . $origName;  // Eindeutiger Dateiname
+            $targetPath = $uploadDir . $newName;
+
+            if (move_uploaded_file($_FILES['file']['tmp_name'], $targetPath)) {
+                // In DB eintragen
+                $stmtUp = $pdo->prepare("
+                    INSERT INTO uploads (file_name, file_path, citizen_id, target_employee) 
+                    VALUES (:fileName, :filePath, :citizenId, :empId)
+                ");
+                $stmtUp->execute([
+                    ':fileName'    => $origName,
+                    ':filePath'    => $newName,
+                    ':citizenId'   => $citizen['id'],
+                    ':empId'       => $employeeId
+                ]);
+                $message = "Datei erfolgreich hochgeladen und zugewiesen.";
+            } else {
+                $error = "Fehler beim Hochladen der Datei.";
+            }
+        }
     }
-} else {
-    echo "Ungültige Anfrage.";
 }
 ?>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Datei Upload</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+<div class="form-container">
+    <h2>Datei an Mitarbeiter senden</h2>
+
+    <?php if ($message): ?>
+        <p class="message"><?php echo htmlspecialchars($message); ?></p>
+    <?php endif; ?>
+    <?php if ($error): ?>
+        <p class="error"><?php echo htmlspecialchars($error); ?></p>
+    <?php endif; ?>
+
+    <form action="../dashboard.php?page=upload" method="post" enctype="multipart/form-data">
+        <label for="employee_id">Mitarbeiter wählen:</label>
+        <select name="employee_id" id="employee_id" required>
+            <option value="">-- Bitte wählen --</option>
+            <?php foreach ($employees as $emp): ?>
+                <?php
+                $displayEmp = $emp['username'];
+                if ($emp['first_name'] || $emp['last_name']) {
+                    $displayEmp .= ' (' . $emp['first_name'] . ' ' . $emp['last_name'] . ')';
+                }
+                ?>
+                <option value="<?php echo $emp['id']; ?>">
+                    <?php echo htmlspecialchars($displayEmp); ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+
+        <label for="file">Datei (PDF, JPG, PNG):</label>
+        <input type="file" name="file" id="file" accept=".pdf,image/jpeg,image/png" required>
+
+        <button type="submit" class="btn">Hochladen</button>
+    </form>
+</div>
+</body>
+</html>
