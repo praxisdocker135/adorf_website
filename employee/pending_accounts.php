@@ -59,6 +59,7 @@ $query = "
     FROM users
     WHERE role = 'citizen'
       AND (password IS NULL OR failed_logins >= 5)
+      AND (id != 1)
     ORDER BY created_at DESC
 ";
 $stmt = $pdo->prepare($query);
