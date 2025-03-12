@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
 
     <!-- WICHTIG: action zeigt auf dashboard.php?page=create_account -->
-    <form action="dashboard.php?page=create_account" method="post">
+    <form action="../dashboard.php?page=create_account" method="post">
         <label for="username">Benutzername:</label>
         <input type="text" name="username" id="username" required>
 

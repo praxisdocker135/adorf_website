@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Neuen Bürger anlegen, Passwort = NULL
             $insertStmt = $pdo->prepare("
                 INSERT INTO users (username, password, role, first_name, last_name, address, birthdate, email)
-                VALUES ('', NULL, 'citizen', :fn, :ln, :adr, :bd, :em)
+                VALUES (:em, NULL, 'citizen', :fn, :ln, :adr, :bd, :em)
             ");
             $success = $insertStmt->execute([
                 ':fn' => $firstName,
