@@ -40,7 +40,6 @@ $user = $_SESSION['user'];
         if ($user['role'] === 'citizen') {
             echo '<a href="dashboard.php?page=downloads">Meine Downloads</a>';
             echo '<a href="dashboard.php?page=upload">Datei Upload</a>';
-            echo '<a href="dashboard.php?page=profile">Mein Profil</a>';
             echo '<a href="dashboard.php?page=change_password">Passwort ändern</a>';
         } else { // Navigation für Mitarbeiter (und Admin)
             echo '<a href="dashboard.php?page=manage_contacts">Kontaktformulare verwalten</a>';
