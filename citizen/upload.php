@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 // Prüfe, ob der Benutzer eingeloggt und Bürger ist
 if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'citizen') {

@@ -104,7 +104,7 @@ $pendingUsers = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <?php
                 // Statusbestimmung
                 if (is_null($user['password'])) {
-                    $status = "Neuer Account (kein Passwort)";
+                    $status = "Kein Passwort";
                 } elseif ($user['failed_logins'] >= 5) {
                     $status = "Gesperrt";
                 } else {
