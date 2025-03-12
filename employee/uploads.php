@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 
 // Nur eingeloggte Mitarbeiter oder Admins dürfen zugreifen
 if (!isset($_SESSION['user']) ||
