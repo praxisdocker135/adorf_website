@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Landratsamt Ansbach</title>
+    <title>Stadt Adorf</title>
     <!-- Deine zentrale CSS-Datei -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -11,7 +11,7 @@
 <!-- Header mit Logo und Navigation -->
 <header>
     <div class="header-container">
-        <img src="images/logo.jpg" alt="Landratsamt Ansbach Logo" class="logo">
+        <img src="images/logo.jpg" alt="Stadt Adorf Logo" class="logo">
         <nav>
             <ul>
                 <li><a href="#hero">Startseite</a></li>
@@ -28,7 +28,7 @@
 <!-- Hero-Bereich -->
 <section id="hero">
     <div class="container">
-        <h1>Willkommen beim Landratsamt Ansbach</h1>
+        <h1>Willkommen bei der Stadt Adorf</h1>
         <p>Ihr zuverlässiger Partner in allen Verwaltungsangelegenheiten.</p>
         <a href="#services" class="btn">Mehr erfahren</a>
         <a href="login.php" class="btn">Login</a>
@@ -47,7 +47,7 @@
             </div>
             <div class="card">
                 <h3>Wirtschaftsförderung</h3>
-                <p>Beratung und Unterstützung für Unternehmen in Ansbach.</p>
+                <p>Beratung und Unterstützung für Unternehmen in Adorf.</p>
                 <a href="#">Mehr erfahren</a>
             </div>
             <div class="card">
@@ -79,8 +79,8 @@
     <h2>Kontakt</h2>
     <div class="container">
         <p>
-            Landratsamt Ansbach<br>
-            Musterstraße 1, 91522 Ansbach<br>
+            Stadt Adorf<br>
+            Musterstraße 1, 91522 Adorf<br>
             Telefon: 0981 123456
         </p>
         <form action="contact_process.php" method="post">
@@ -95,7 +95,7 @@
 <!-- Footer -->
 <footer>
     <div class="container">
-        <p>&copy; 2025 Landratsamt Ansbach. Alle Rechte vorbehalten.</p>
+        <p>&copy; 2025 Stadt Adorf. Alle Rechte vorbehalten.</p>
     </div>
 </footer>
 </body>
