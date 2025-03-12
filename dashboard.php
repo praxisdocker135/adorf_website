@@ -45,6 +45,7 @@ $user = $_SESSION['user'];
         } else { // Navigation für Mitarbeiter (und Admin)
             echo '<a href="dashboard.php?page=manage_contacts">Kontaktformulare verwalten</a>';
             echo '<a href="dashboard.php?page=provide_download">Download bereitstellen</a>';
+            echo '<a href="dashboard.php?page=uploads">Bürger-Uploads</a>';
             echo '<a href="dashboard.php?page=change_password">Passwort ändern</a>';
             // Zusätzliche Menüpunkte für Admins
             if ($user['role'] === 'admin') {
@@ -70,6 +71,7 @@ $user = $_SESSION['user'];
                 'manage_contacts',
                 'provide_download',
                 'reset_password',
+                'uploads',
                 'create_account',
                 'pending_accounts',
                 'change_password'
@@ -84,14 +86,14 @@ $user = $_SESSION['user'];
                     case 'upload':
                         include 'citizen/upload.php';
                         break;
-                    case 'profile':
-                        include 'citizen/profile.php';
-                        break;
                     case 'manage_contacts':
                         include 'employee/manage_contacts.php';
                         break;
                     case 'provide_download':
                         include 'employee/provide_download.php';
+                        break;
+                    case 'uploads':
+                        include 'employee/uploads.php';
                         break;
                     case 'reset_password':
                         include 'employee/reset_password.php';
