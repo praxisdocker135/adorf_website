@@ -261,13 +261,12 @@ footer {
 
 .form-container {
   width: 90%;           /* oder 80%, je nachdem wie breit du willst */
-  max-width: 1200px;    /* maximale Breite, z. B. 1200px */
+  max-width: 1500px;    /* maximale Breite, z. B. 1200px */
   margin: 50px auto;    /* zentriert, mit 50px Abstand nach oben/unten */
   background: #fff;
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  /* Falls du größer sein willst, erhöhe max-width oder nimm width: 100% */
 }
 
 .form-container h2 {
