@@ -101,7 +101,7 @@ $standardDownloads = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php endif; ?>
 
     <!-- Formular zum Hochladen neuer Standard-Downloads -->
-    <form action="dashboard.php?page=manage_standard_downloads" method="post" enctype="multipart/form-data">
+    <form action="../dashboard.php?page=manage_standard_downloads" method="post" enctype="multipart/form-data">
         <input type="hidden" name="action" value="upload_standard">
 
         <label for="file">Neue Datei hochladen (PDF, JPG, PNG):</label>
@@ -129,7 +129,7 @@ $standardDownloads = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <td><?php echo htmlspecialchars($sd['upload_date']); ?></td>
                     <td>
                         <a class="delete-link"
-                           href="dashboard.php?page=manage_standard_downloads&amp;delete_id=<?php echo $sd['id']; ?>"
+                           href="../dashboard.php?page=manage_standard_downloads&amp;delete_id=<?php echo $sd['id']; ?>"
                            onclick="return confirm('Diesen Standard-Download wirklich löschen?');">
                             Löschen
                         </a>

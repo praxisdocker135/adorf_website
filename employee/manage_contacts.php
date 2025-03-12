@@ -64,7 +64,7 @@ $contacts = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <td><?php echo htmlspecialchars($contact['submitted_at']); ?></td>
                 <td>
                     <!-- Löschen-Link mit GET-Parameter ?delete_id=XYZ -->
-                    <a class="delete-link" href="dashboard.php?page=manage_contacts&amp;delete_id=<?php echo $contact['id']; ?>"
+                    <a class="delete-link" href="../dashboard.php?page=manage_contacts&amp;delete_id=<?php echo $contact['id']; ?>"
                        onclick="return confirm('Diesen Eintrag wirklich löschen?');">
                         Löschen
                     </a>
