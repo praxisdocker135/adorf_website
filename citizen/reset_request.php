@@ -13,7 +13,7 @@ $message = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Formulardaten: Benutzername & Geburtsdatum
     $username   = trim($_POST['username']);
-    $birthdate  = trim($_POST['birthdate']); // Format YYYY-MM-DD
+    $birthdate  = trim($_POST['birthdate']); // Format gemäß browser sprache
 
     // Ggf. Validierung
     if (empty($username) || empty($birthdate)) {
@@ -103,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label for="username">Benutzername:</label>
         <input type="text" name="username" id="username" required>
 
-        <label for="birthdate">Geburtsdatum (YYYY-MM-DD):</label>
+        <label for="birthdate">Geburtsdatum:</label>
         <input type="date" name="birthdate" id="birthdate" required>
 
         <button type="submit" class="btn">Absenden</button>

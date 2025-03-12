@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $firstName = trim($_POST['first_name']);
     $lastName  = trim($_POST['last_name']);
     $address   = trim($_POST['address']);
-    $birthdate = trim($_POST['birthdate']);  // Format: DD/MM/YYYY
+    $birthdate = trim($_POST['birthdate']);  // Format: gemäß browser sprache
     $email     = trim($_POST['email']);
 
     // Grundlegende Validierung
@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label for="address">Adresse:</label>
         <input type="text" name="address" id="address" required>
 
-        <label for="birthdate">Geburtsdatum (DD-MM-YYYY):</label>
+        <label for="birthdate">Geburtsdatum:</label>
         <input type="date" name="birthdate" id="birthdate" required>
 
         <label for="email">E-Mail:</label>
