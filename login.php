@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="error"><?php echo htmlspecialchars($error); ?></div>
     <?php endif; ?>
     <form action="login.php" method="post">
-        <label for="username">Benutzername:</label>
+        <label for="username">Benutzername/Email-Adresse:</label>
         <input type="text" name="username" id="username" required>
 
         <label for="password">Passwort:</label>
